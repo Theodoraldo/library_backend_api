@@ -5,7 +5,6 @@ class BorrowHistory < ApplicationRecord
     validates :book_id, presence: true
     validates :library_patron_id, presence: true
     validates :borrow_date, presence: true
-    validates :returned_date, presence: true
     validate :returned_date_cannot_be_in_the_past
   
     def returned_date_cannot_be_in_the_past

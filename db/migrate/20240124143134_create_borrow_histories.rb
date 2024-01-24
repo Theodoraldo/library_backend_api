@@ -4,7 +4,7 @@ class CreateBorrowHistories < ActiveRecord::Migration[7.1]
       t.date :borrow_date
       t.date :returned_date
       t.string :book_state
-      t.boolean :instore
+      t.boolean :instore, default: false
       t.string :comment
       t.references :library_patron, null: false, foreign_key: true
       t.references :book, null: false, foreign_key: true

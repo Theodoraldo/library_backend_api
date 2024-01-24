@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_143336) do
     t.date "borrow_date"
     t.date "returned_date"
     t.string "book_state"
-    t.boolean "instore"
+    t.boolean "instore", default: false
     t.string "comment"
     t.bigint "library_patron_id", null: false
     t.bigint "book_id", null: false
