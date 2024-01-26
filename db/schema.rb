@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_143336) do
     t.integer "available_copies"
     t.integer "pages"
     t.string "note"
+    t.boolean "removed", default: false
     t.bigint "genre_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
