@@ -30,11 +30,11 @@ class Api::V1::BooksController < ApplicationController
     end
 
     def destroy
-        @book.destroy
+        @book.hide_book
         head :no_content
     end
 
-  
+ 
     private
   
     def set_book
