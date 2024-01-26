@@ -7,4 +7,8 @@ class Book < ApplicationRecord
     validates :genre_id, presence: true
     
     belongs_to :genre
+
+    def hide_book
+        update(removed: !removed)
+    end
 end
