@@ -7,6 +7,7 @@ class CreateBooks < ActiveRecord::Migration[7.1]
       t.integer :available_copies
       t.integer :pages
       t.string :note
+      t.boolean :removed, default: false
       t.references :genre, null: false, foreign_key: true
 
       t.timestamps

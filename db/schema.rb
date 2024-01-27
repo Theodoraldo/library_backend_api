@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_24_143336) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_27_181742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_143336) do
     t.integer "available_copies"
     t.integer "pages"
     t.string "note"
+    t.boolean "removed", default: false
     t.bigint "genre_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -46,6 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_143336) do
     t.bigint "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["book_id"], name: "index_borrow_histories_on_book_id"
     t.index ["library_patron_id"], name: "index_borrow_histories_on_library_patron_id"
   end
@@ -72,8 +74,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_143336) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "jti", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
   add_foreign_key "attendances", "library_patrons"
   add_foreign_key "books", "genres"
   add_foreign_key "borrow_histories", "books"
   add_foreign_key "borrow_histories", "library_patrons"
+  add_foreign_key "borrow_histories", "users"
 end
