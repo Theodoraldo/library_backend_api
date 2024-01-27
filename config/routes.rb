@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users,  controllers: {
+  devise_for :users, path: '', path_names: {
+    sign_in: 'login',
+    sign_out: 'logout',
+    registration: 'signup'
+  },
+  controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
@@ -20,6 +25,7 @@ Rails.application.routes.draw do
       resources :library_patrons
       resources :attendances
       resources :borrow_histories
+      resources :users
     end
   end
 end

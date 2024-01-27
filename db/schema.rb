@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_26_175025) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_27_181742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_175025) do
     t.bigint "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["book_id"], name: "index_borrow_histories_on_book_id"
     t.index ["library_patron_id"], name: "index_borrow_histories_on_library_patron_id"
   end
@@ -92,4 +93,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_175025) do
   add_foreign_key "books", "genres"
   add_foreign_key "borrow_histories", "books"
   add_foreign_key "borrow_histories", "library_patrons"
+  add_foreign_key "borrow_histories", "users"
 end

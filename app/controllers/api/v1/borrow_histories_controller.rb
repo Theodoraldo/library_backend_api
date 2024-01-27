@@ -43,6 +43,6 @@ class Api::V1::BorrowHistoriesController < ApplicationController
 
     
     def history_params
-        params.require(:borrow_history).permit(:borrow_date, :returned_date, :book_state, :instore, :comment, :library_patron_id, :book_id)
+        params.require(:borrow_history).permit(:borrow_date, :returned_date, :book_state, :instore, :comment, :library_patron_id, :book_id, :user_id)
     end
 end
