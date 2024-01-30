@@ -228,8 +228,8 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
-  devise
-  devise-jwt
+  devise (~> 4.9, >= 4.9.3)
+  devise-jwt (~> 0.11.0)
   pg (~> 1.1)
   puma (>= 5.0)
   rack-cors
