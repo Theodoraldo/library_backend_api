@@ -1,5 +1,5 @@
 class BorrowHistory < ApplicationRecord
-    enum book_state: { good: 0, bad: 1, torn: 2, lost: 3 }
+    enum book_state: { "0": "good", "1": "bad", "2": "torn", "3": "lost" }
     belongs_to :book
     belongs_to :library_patron
     validates :book_id, presence: true
