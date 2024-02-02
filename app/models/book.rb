@@ -8,6 +8,8 @@ class Book < ApplicationRecord
     
     belongs_to :genre
 
+    mount_uploader :image, ImageUploader
+
     def hide_book
         update(removed: !removed)
     end
