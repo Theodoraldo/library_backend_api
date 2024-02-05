@@ -3,7 +3,7 @@ class Api::V1::BorrowHistoriesController < ApplicationController
 
     
     def index
-        @histories = BorrowHistory.all
+        @histories = BorrowHistory.order(created_at: :desc).all
         render json: @histories
     end
 
