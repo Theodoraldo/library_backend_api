@@ -5,9 +5,9 @@ class Book < ApplicationRecord
     validates :available_copies, presence: true
     validates :published_date, presence: true
     validates :genre_id, presence: true
+    validates :image_path, presence: true
     
     belongs_to :genre
-    has_one_attached :image
 
     def hide_book
         update(removed: !removed)
