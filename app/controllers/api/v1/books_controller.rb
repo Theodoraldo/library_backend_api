@@ -50,25 +50,30 @@ class Api::V1::BooksController < ApplicationController
     end
 
     def decode_image(data)
-      mime_type, base64_image = data.split(',')
-
-      extension = mime_type.split('/')[0].split(';')[1]
-
-      decoded_data = Base64.decode64(base64_image)
+        mime_type, base64_image = data.split(',')
         
-      temp_img_file = Tempfile.new(['image', ".#{extension}"])
-
-      temp_img_file.binmode
-      temp_img_file.write(decoded_data)
-      temp_img_file.rewind
-
-      img_params = {filename: "image.#{extension}", type: mime_type, tempfile: temp_img_file}
-
-      ActionDispatch::Http::UploadedFile.new(img_params)
-    end
+        extension = mime_type.split('/')[1].split(';')[0]
+        
+        decoded_data = Base64.decode64(base64_image)
+        
+        temp_img_file = Tempfile.new(['image', ".#{extension}"])
+        temp_img_file.binmode
+        temp_img_file.write(decoded_data)
+        temp_img_file.rewind
+      
+        temp_img_file.close # Close the file
+      
+        image = MiniMagick::Image.open(temp_img_file.path) # Open the image with MiniMagick
+        image.resize "100x100"
+        image.write temp_img_file.path # Write the changes to the file
+      
+        img_params = {filename: "image.#{extension}", type: mime_type, tempfile: temp_img_file}
+      
+        ActionDispatch::Http::UploadedFile.new(img_params)
+      end
 
     
     def book_params
-        params.require(:book).permit(:title, :author, :genre_id, :published_date, :available_copies, :pages, :note)
+        params.require(:book).permit(:title, :author, :genre_id, :published_date, :available_copies, :pages, :note, :image_path)
     end
 end
