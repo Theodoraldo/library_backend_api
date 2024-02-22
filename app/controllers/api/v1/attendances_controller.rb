@@ -3,7 +3,7 @@ class Api::V1::AttendancesController < ApplicationController
 
     
     def index
-        @attendances = Attendance.all
+        @attendances = Attendance.where(check_out: nil)
         render json: @attendances
     end
 
