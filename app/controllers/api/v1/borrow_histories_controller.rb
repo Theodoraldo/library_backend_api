@@ -3,9 +3,19 @@ class Api::V1::BorrowHistoriesController < ApplicationController
 
     
     def index
-        @histories = BorrowHistory.order(created_at: :desc).all
-        render json: @histories
+        @histories = BorrowHistory.joins(:book, :library_patron)                                    
+                                  .select("borrow_histories.id, borrow_histories.borrow_date, borrow_histories.book_id, borrow_histories.library_patron_id")
+                                  .order("borrow_histories.created_at" => :desc)
+                                  .where(instore: false)
+      
+        render json: @histories.as_json(
+          include: {
+            book: { only: [:title] }, 
+            library_patron: { only: [:firstname, :lastname] } 
+          }
+        )
     end
+      
 
     def show
         render json: @history
