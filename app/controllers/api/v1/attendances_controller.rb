@@ -1,11 +1,18 @@
 class Api::V1::AttendancesController < ApplicationController
     before_action :set_attendance, only: [:show, :update, :destroy]
 
-    
     def index
-        @attendances = Attendance.where(check_out: nil)
-        render json: @attendances
-    end
+        @attendances = Attendance.joins(:library_patron)
+                        .select("attendances.id", "DATE(attendances.check_in) AS check_in_date","TO_CHAR(check_in, 'HH:MI:SS AM') AS check_in_time" , "attendances.library_patron_id")
+                        .order("attendances.created_at DESC")
+                        .where(check_out: nil)
+        
+        render json: @attendances.as_json(
+            include: {
+                library_patron: { only: [:firstname, :lastname] } 
+            }
+        )
+    end   
 
     def show
         render json: @attendance
