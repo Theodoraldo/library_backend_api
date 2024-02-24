@@ -2,7 +2,7 @@ class Api::V1::GenresController < ApplicationController
     before_action :set_genre, only: [:show, :update, :destroy]
     
     def index
-        @genres = Genre.all
+        @genres = Genre.order("updated_at" => :desc)
         render json: @genres
     end
 
